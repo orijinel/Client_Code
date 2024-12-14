@@ -9,7 +9,7 @@ import Header from './Header';
 import { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { fetchAllCampusesThunk } from "../../store/thunks";
+import { fetchAllCampusesThunk, deleteCampusThunk } from "../../store/thunks";
 import { AllCampusesView } from "../views";
 
 class AllCampusesContainer extends Component {
@@ -26,6 +26,7 @@ class AllCampusesContainer extends Component {
         <Header />
         <AllCampusesView
           allCampuses={this.props.allCampuses}
+          deleteCampus={this.props.deleteCampus}
         />
       </div>
     );
@@ -34,7 +35,6 @@ class AllCampusesContainer extends Component {
 
 // 1. The "mapState" argument specifies the data from Redux Store that the component needs.
 // The "mapState" is called when the Store State changes, and it returns a data object of "allCampuses".
-// The following 2 input arguments are passed to the "connect" function used by "AllCampusesContainer" component to connect to Redux Store.
 const mapState = (state) => {
   return {
     allCampuses: state.allCampuses,  // Get the State object from Reducer "allCampuses"
@@ -45,6 +45,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     fetchAllCampuses: () => dispatch(fetchAllCampusesThunk()),
+    deleteCampus: (campusId) => dispatch(deleteCampusThunk(campusId)),
   };
 };
 
@@ -52,6 +53,7 @@ const mapDispatch = (dispatch) => {
 AllCampusesContainer.propTypes = {
   allCampuses: PropTypes.array.isRequired,
   fetchAllCampuses: PropTypes.func.isRequired,
+  deleteCampus: PropTypes.func.isRequired,
 };
 
 // Export store-connected container by default
